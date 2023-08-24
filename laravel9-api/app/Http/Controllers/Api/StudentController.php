@@ -15,6 +15,7 @@ class StudentController extends Controller
         if($student->count() > 0) {
             return response()->json([
                 'status' => 200,
+                'message' => 'Created successfully',
                 'students' => $student
             ], 200);
 
@@ -88,7 +89,7 @@ class StudentController extends Controller
         if($student) {
             return response()->json([
                 'status' => 200,
-                'message' => $student
+                'student' => $student,
             ],200);
         }else {
             return response()->json([
@@ -141,7 +142,6 @@ class StudentController extends Controller
 
     public function destroy($id) {
         $student = Student::find($id);
-        
         if($student) {
             $student->delete();
             return response()->json([

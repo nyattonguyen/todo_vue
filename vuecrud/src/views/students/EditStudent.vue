@@ -34,9 +34,6 @@
             aria-describedby="emailHelp"
             v-model="model.student.email"
           />
-          <div id="emailHelp" class="form-text">
-            We'll never share your email with anyone else.
-          </div>
         </div>
         <div class="mb-3">
           <label class="form-label">Course</label>
@@ -89,11 +86,9 @@ export default {
   methods: {
     getStudentData(studentId) {
       var myThis = this;
-
       axios
-        .get(`http://localhost:8000/api/students/${this.studentId}/edit`)
+        .get(`http://localhost:8000/api/students/${studentId}/edit`)
         .then((res) => {
-          console.log(res.data.student);
           this.model.student = res.data.student;
         })
         .catch((error) => {
@@ -115,7 +110,10 @@ export default {
     updateStudent() {
       var myThis = this;
       axios
-        .put("http://localhost:8000/api/students/", this.model.student)
+        .put(
+          `http://localhost:8000/api/students/${this.studentId}/edit`,
+          this.model.student
+        )
         .then((res) => {
           console.log("data ", res.data);
           alert(res.data.message);

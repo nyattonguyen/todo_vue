@@ -34,7 +34,7 @@ import { RouterLink } from 'vue-router';
                 <td>{{ student.created_at }}</td>
                 <td>
                   <RouterLink
-                    :to="{ path: '/students' + student.id + '/edit' }"
+                    :to="{ path: '/students/' + student.id + '/edit' }"
                     class="btn btn-info"
                   >
                     Edit
@@ -67,16 +67,7 @@ export default {
   name: "students",
   data() {
     return {
-      students: [
-        {
-          id: 1,
-          name: "Tai",
-          course: "ABC",
-          email: "taibaka@gmail.com",
-          phone: "123456",
-          created_at: "12/8/2023",
-        },
-      ],
+      students: [],
     };
   },
   mounted() {
@@ -89,24 +80,23 @@ export default {
         console.log(this.students);
       });
     },
-  },
-
-  deleteStudent(studentId) {
-    if (confirm("Are you sure you want to delete")) {
-      axios
-        .delete(`http://localhost:8000/api/students/${studentId}/delete`)
-        .then((res) => {
-          alert(res.data.message);
-          this.getStudents();
-        })
-        .catch(function (error) {
-          if (error.response) {
-            if (error.response.status === 404) {
-              alert(error.response.data.message);
+    deleteStudent(studentId) {
+      if (confirm("Are you sure you want to delete")) {
+        axios
+          .delete(`http://localhost:8000/api/students/${studentId}/delete`)
+          .then((res) => {
+            alert(res.data.message);
+            this.getStudents();
+          })
+          .catch(function (error) {
+            if (error.response) {
+              if (error.response.status === 404) {
+                alert(error.response.data.message);
+              }
             }
-          }
-        });
-    }
+          });
+      }
+    },
   },
 };
 </script>
